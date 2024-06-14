@@ -12,16 +12,12 @@ pipeline{
             }
             
         }
-        stage('Build & Push Docker Image'){
+        stage('Build Docker Image'){
             steps{
-                script{
-                    sh 'docker build -t sundayfagbuaro/myapp-new:1.0.0 .'
-                    withCredentials([string(credentialsId: 'docker-pwd', variable: 'docker-pass')]) {
-                    sh 'docker login -u sundayfagbuaro -p $docker-pass'
-                    sh 'docker push sundayfagbuaro/myapp-new:1.0.0'
-                    }
-                }
+                echo 'Building docker image'
+                sh 'docker build -t sundayfagbuaro/myapp:1.0.0 .'
             }
         }
     }
 }
+
