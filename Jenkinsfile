@@ -18,6 +18,15 @@ pipeline{
                 sh 'docker build -t sundayfagbuaro/myapp:1.0.0 .'
             }
         }
+        stage('Push Image to Docker Hub'){
+            steps{
+                echo 'Pushing image to docker hub'
+                withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerHubPwd')]) {
+                sh 'docker login -u sundayfagbuaro -p ${DockerHubPwd}' 
+                }
+                sh 'docker push sundayfagbuaro/myapp:1.0.0'
+            }
+        }
     }
 }
 
