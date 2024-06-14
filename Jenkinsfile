@@ -16,7 +16,7 @@ pipeline{
             steps{
                 script{
                     sh 'docker build -t sundayfagbuaro/myapp-new:1.0.0 .'
-                    withCredentials([string(credentialsId: 'docker-token-newest', variable: 'docker-pass')]) {
+                    withCredentials([string(credentialsId: 'docker-pwd', variable: 'docker-pass')]) {
                     sh 'docker login -u sundayfagbuaro -p $docker-pass'
                     sh 'docker push sundayfagbuaro/myapp-new:1.0.0'
                     }
