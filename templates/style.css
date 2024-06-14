@@ -1,0 +1,13 @@
+h1{
+    font-style: italic;
+    color: brown;
+}
+#div2 {
+   background-color: aqua; 
+}
+body{
+    background-color: aqua;
+    position: absolute;
+    border-color: black;
+    
+}
