@@ -28,7 +28,10 @@ pipeline{
             }
         }
         stage('Deploy myapp to k8 cluster'){
-            kubernetesDeploy (configs: "deployment.yaml", kubeconfigId: 'k8config')
+            steps{
+                kubernetesDeploy (configs: "deployment.yaml", kubeconfigId: 'k8config')
+            }
+            
         }
     }
 }

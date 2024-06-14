@@ -33,27 +33,27 @@ spec:
         spec:
             containers:
                 - name: flask-app
-                  image: sundayfagbuaro/flask-app-k8:1.0
+                  image: sundayfagbuaro/myapp:1.0.0
                   ports:
                     - containerPort: 5000
                   env:
                   - name: MYSQL_HOST
                     valueFrom:
                       configMapKeyRef:
-                         name: flask-mysql-configmap
+                         name: myapp-mysql-configmap
                          key: host
                   - name: MYSQL_USER
                     valueFrom:
                       secretKeyRef:
-                        name: flask-mysql-secret
+                        name: myapp-mysql-secret
                         key: db_user
                   - name: MYSQL_ROOT_PASSWORD
                     valueFrom:
                       secretKeyRef:
-                        name: flask-mysql-secret
+                        name: myapp-mysql-secret
                         key: db_password
                   - name: MYSQL_DB
                     valueFrom:
                       configMapKeyRef:
-                        name: flask-mysql-configmap
+                        name: myapp-mysql-configmap
                         key: db
