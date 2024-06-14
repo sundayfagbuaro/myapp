@@ -2,8 +2,8 @@
 from flask import Flask, render_template, request
 import pymysql
 
-db = pymysql.connect(host='localhost', user='root', password='password', database='users_db') # connect to localhost
-#db = pymysql.connect(host='flask-db', user='root', password='password', database='users_db', port=3306) # Connect to conta.
+#db = pymysql.connect(host='localhost', user='root', password='password', database='users_db') # connect to localhost
+db = pymysql.connect(host='flask-db', user='root', password='password', database='users_db', port=3306) # Connect to conta.
 
 app = Flask(__name__)
 
@@ -34,4 +34,5 @@ def users():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5001, debug=True)
+#    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
