@@ -27,6 +27,9 @@ pipeline{
                 sh 'docker push sundayfagbuaro/myapp:1.0.0'
             }
         }
+        stage('Deploy myapp to k8 cluster'){
+            kubernetesDeploy (configs: "deployment.yaml", kubeconfigId: 'k8config')
+        }
     }
 }
 
