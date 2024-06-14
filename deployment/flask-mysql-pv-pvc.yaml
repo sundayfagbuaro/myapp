@@ -1,0 +1,27 @@
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: flask-mysql-pv
+#  labels:
+#    type: local
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 2Gi
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: "/mnt/flask_mysql"
+#---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flask-mysql-pv-claim
+  namespace: myapp
+spec:
+  storageClassName: basic-csi
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

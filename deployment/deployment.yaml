@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: flask-app
+    namespace: myapp
+spec:
+    type: LoadBalancer
+    selector:
+        app: flask_db
+    ports:
+        - name: "flask-app"
+          protocol: TCP
+          port: 5000
+          targetPort: 5000
+          nodePort: 30001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: flaskapp-deployment
+    labels:
+        app: flask_db
+    namespace: myapp
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: flask_db
+    template:
+        metadata:
+            labels:
+                app: flask_db
+        spec:
+            containers:
+                - name: flask-app
+                  image: sundayfagbuaro/flask-app-k8:1.0
+                  ports:
+                    - containerPort: 5000
+                  env:
+                  - name: MYSQL_HOST
+                    valueFrom:
+                      configMapKeyRef:
+                         name: flask-mysql-configmap
+                         key: host
+                  - name: MYSQL_USER
+                    valueFrom:
+                      secretKeyRef:
+                        name: flask-mysql-secret
+                        key: db_user
+                  - name: MYSQL_ROOT_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: flask-mysql-secret
+                        key: db_password
+                  - name: MYSQL_DB
+                    valueFrom:
+                      configMapKeyRef:
+                        name: flask-mysql-configmap
+                        key: db

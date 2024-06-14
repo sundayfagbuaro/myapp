@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-mysql-db-deployment
+  labels:
+    app: flask_db
+  namespace: myapp
+spec:
+  selector:
+    matchLabels:
+      app: flask_db
+#      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: flask_db
+#        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: flask-db
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: flask-mysql-secret
+              key: db_password
+        - name: MYSQL_DB
+          valueFrom:
+            configMapKeyRef:
+              name: flask-mysql-configmap
+              key: db
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: flask-mysql-configmap
+              key: host
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: flask-mysql-secret
+              key: db_user
+        ports:
+        - containerPort: 3306
+#          name: flaskdb-mysql
+        volumeMounts:
+        - name: flask-mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: flask-mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: flask-mysql-pv-claim

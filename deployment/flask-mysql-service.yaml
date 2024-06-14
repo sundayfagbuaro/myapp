@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-db
+  labels:
+    app: flask_db
+  namespace: myapp
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: flask_db
+#    tier: mysql
+  clusterIP: None
